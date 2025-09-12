@@ -1,2 +1,1 @@
-# DramaAgent
-DramaAgent: Agentic Drama Video Generation
+# DramaAgent: Agentic Drama Video Generation
