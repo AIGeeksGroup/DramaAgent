@@ -1,0 +1,125 @@
+    "Sub-Script": {
+        "Sub-Script 1": {
+            "Plot": "Anna, Elsa, Kristoff, Olaf, and Mattias prepare to embark on a journey to uncover the truth behind the mysterious voice calling Elsa. They gather supplies and set out from Arendelle, determined to find answers.",
+            "Involving Characters": [
+                "Anna",
+                "Elsa",
+                "Kristoff",
+                "Mattias",
+                "Olaf"
+            ],
+            "Timeline": "Morning of the journey",
+            "Reason for Division": "This sub-script sets up the initial premise and introduces the main characters and their goal.",
+            "Scene Annotation": {
+                "Internal Chain-of-Thought": {
+                    "Narrative Structure": "The movie is divided into three core acts: Setup, Confrontation, and Resolution. The setup introduces the characters and their mission, the confrontation involves the challenges they face during their journey, and the resolution reveals the truth behind the mysterious voice. The major turning point is when they decide to embark on the journey.",
+                    "Key Scene Elements": "Characters: Anna, Elsa, Kristoff, Olaf, Mattias. Roles and Interactions: Anna and Elsa are sisters preparing for a dangerous journey. Kristoff and Anna are romantic partners, providing emotional support. Olaf and Mattias are allies, offering assistance and encouragement. Events: Gathering supplies, setting out from Arendelle, determination to find answers.",
+                    "Scene Boundaries": "Natural breaks occur when the characters gather supplies and when they leave Arendelle. These moments serve as distinct transitions, marking the beginning of their adventure. Each scene has a clear purpose: preparation and departure.",
+                    "Cinematic Elements for Each Scene": "Scene Description: The first scene focuses on the warm, bustling atmosphere of Arendelle as the characters prepare. The second scene captures the emotional farewell and the start of their journey. Emotional Tone: The first scene is hopeful and busy, while the second is determined and slightly tense. Visual Style: Use warm, vibrant colors for the first scene and cooler, more subdued tones for the second. Key Props: Travel packs, maps, food supplies, horses. Music and Sound Effects: Upbeat, orchestral music for the first scene; a more suspenseful, driving score for the second. Cinematography Notes: Use wide shots to show the scale of Arendelle and close-ups to capture the characters' emotions."
+                },
+                "Scene": {
+                    "Scene 1": {
+                        "Involving Characters": [
+                            "Anna",
+                            "Elsa",
+                            "Kristoff",
+                            "Olaf",
+                            "Mattias"
+                        ],
+                        "Plot": "Anna, Elsa, Kristoff, Olaf, and Mattias gather in the courtyard of Arendelle to prepare for their journey. They pack supplies, discuss their plan, and share a moment of hope and determination.",
+                        "Scene Description": "The courtyard of Arendelle is bustling with activity. Servants and townspeople help the group pack travel packs, load horses, and prepare food supplies. The sun is shining, casting a warm glow over the scene. The characters exchange words of encouragement and resolve.",
+                        "Emotional Tone": "Hopeful and busy",
+                        "Visual Style": "Warm, vibrant colors; wide shots to capture the activity and close-ups to show the characters' emotions",
+                        "Key Props": [
+                            "Travel packs",
+                            "Maps",
+                            "Food supplies",
+                            "Horses"
+                        ],
+                        "Music and Sound Effects": "Upbeat, orchestral music with a sense of adventure and camaraderie",
+                        "Cinematography Notes": "Wide shots of the courtyard, medium shots of the characters packing, close-ups of their faces showing determination and hope",
+                        "Shot Annotation": {
+                            "Internal Chain-of-Thought": {
+                                "Break Down Scene into Key Shots": "The scene can be broken down into several key shots: a wide shot of the courtyard to establish the setting, medium shots of the characters packing supplies, and close-ups of their faces to capture their emotions.",
+                                "Shot Composition and Framing": "Use wide shots to show the bustling courtyard, medium shots to focus on the characters' activities, and close-ups to highlight their facial expressions. Ensure the rule of thirds is applied for balanced compositions.",
+                                "Character Positioning & Bounding Boxes": "Position Anna and Elsa in the center of the frame for the wide shot, with Kristoff, Olaf, and Mattias around them. For medium shots, place two characters at a time, ensuring they do not overlap. For close-ups, focus on individual characters.",
+                                "Emotional Impact": "Enhance the hopeful and busy tone through warm lighting, shallow depth of field to focus on characters, and dynamic camera movements. Use close-ups to capture the determination and hope in their eyes.",
+                                "Camera Techniques and Movements": "Use a static wide shot for the courtyard, a dolly-in for medium shots to create intimacy, and a steady cam for close-ups to maintain focus. Adjust angles to maintain visual interest and engagement.",
+                                "Dialogue & Subtitle Accuracy": "Extract relevant dialogue for each shot, ensuring it matches the characters' actions and emotions. Format dialogue in JSON structure with character names."
+                            },
+                            "Shot": {
+                                "Shot 1": {
+                                    "Involving Characters": {
+                                        "Anna": [
+                                            0.1,
+                                            0.06,
+                                            0.49,
+                                            1.0
+                                        ],
+                                        "Elsa": [
+                                            0.58,
+                                            0.04,
+                                            0.95,
+                                            1.0
+                                        ]
+                                    },
+                                    "Plot/Visual Description": "A wide shot of the courtyard of Arendelle, bustling with activity. Servants and townspeople help Anna and Elsa pack travel packs, load horses, and prepare food supplies. The sun is shining, casting a warm glow over the scene.",
+                                    "Coarse Plot": "Courtyard bustling with activity",
+                                    "Emotional Enhancement": "Warm lighting and wide shot to capture the busy and hopeful atmosphere",
+                                    "Shot Type": "Wide shot",
+                                    "Camera Movement": "Static",
+                                    "Subtitles": {
+                                        "Anna": "We need to be ready for anything.",
+                                        "Elsa": "I know. We have to stay focused."
+                                    }
+                                },
+                                "Shot 2": {
+                                    "Involving Characters": {
+                                        "Kristoff": [
+                                            0.1,
+                                            0.06,
+                                            0.49,
+                                            1.0
+                                        ],
+                                        "Olaf": [
+                                            0.58,
+                                            0.04,
+                                            0.95,
+                                            1.0
+                                        ]
+                                    },
+                                    "Plot/Visual Description": "A medium shot of Kristoff and Olaf loading supplies onto the horses. Kristoff checks the maps while Olaf hums a cheerful tune. The background shows the ongoing preparations in the courtyard.",
+                                    "Coarse Plot": "Two people loading supplies",
+                                    "Emotional Enhancement": "Shallow depth of field to focus on characters, dynamic camera movement",
+                                    "Shot Type": "Medium shot",
+                                    "Camera Movement": "Dolly-in",
+                                    "Subtitles": {
+                                        "Kristoff": "Everything's in order. We're ready to go.",
+                                        "Olaf": "Yay! I can't wait for our adventure!"
+                                    }
+                                },
+                                "Shot 3": {
+                                    "Involving Characters": {
+                                        "Mattias": [
+                                            0.1,
+                                            0.06,
+                                            0.49,
+                                            1.0
+                                        ],
+                                        "Anna": [
+                                            0.58,
+                                            0.04,
+                                            0.95,
+                                            1.0
+                                        ]
+                                    },
+                                    "Plot/Visual Description": "A close-up of Mattias and Anna discussing the plan. Mattias hands Anna a map, and she nods in agreement. Their faces show determination and resolve.",
+                                    "Coarse Plot": "Two people discussing the plan",
+                                    "Emotional Enhancement": "Close-up to capture the determination and hope in their eyes",
+                                    "Shot Type": "Close-up",
+                                    "Camera Movement": "Steady cam",
+                                    "Subtitles": {
+                                        "Mattias": "This map will guide us through the mountains.",
+                                        "Anna": "Thank you, Mattias. We'll make it."
+                                    }
+                                },

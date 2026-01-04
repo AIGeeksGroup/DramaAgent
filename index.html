@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<!-- saved from url=(0047)https://test-time-training.github.io/video-dit/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DramaAgent: Agentic Storytelling Video Generation</title>
+
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="author" content="">
+
+  <meta property="og:title" content="DramaAgent: Agentic Storytelling Video Generation">
+  <meta property="og:description" content="">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:title" content="DramaAgent: Agentic Storytelling Video Generation">
+  <meta name="twitter:description" content="">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="./main.css">
+<script defer="" src="./script.js" data-website-id="46fb7b42-7fcc-4ad0-8cd3-425b0c99828d"></script>
+<script async="" src="./js"></script><script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  gtag('config', 'G-TN8N5Y8RSC');
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    fetch("foundation_long.txt")
+      .then(response => response.text())
+      .then(text => {
+        document.getElementById("wan-video").dataset.prompt = text;
+      });
+  });
+</script>
+<link rel="icon" href="dramaagent_logo.png">
+
+
+</head>
+
+<div id="overlayText" style="pointer-events: auto; opacity: 1;">
+  <div class="header">DramaAgent: Agentic Storytelling Video Generation</div>
+  <div class="author-list">
+    <div class="author-container-1">
+      <div class="grid-item">
+        Ting Huang<sup>1*</sup>
+      </div>
+      <div class="grid-item">
+        Biao Wu<sup>2*</sup>
+      </div>
+      <div class="grid-item">
+        Ronghao Chen<sup>3*</sup>
+      </div>
+      <div class="grid-item">
+        <a href="https://steve-zeyu-zhang.github.io" target="_blank" rel="noopener noreferrer">Zeyu Zhang<sup>1*†</sup></a>
+      </div>
+    </div>
+    <div class="author-container-2">
+      <div class="grid-item">
+        Tengfei Cheng<sup>4</sup>
+      </div>
+      <div class="grid-item">
+        Qizhen Lan<sup>3</sup>
+      </div>
+      <div class="grid-item">
+        Huacan Wang<sup>5</sup>
+      </div>
+      <div class="grid-item">
+        <a href="https://ha0tang.github.io/" target="_blank" rel="noopener noreferrer">Hao Tang<sup>1‡</sup></a>
+      </div>
+    </div>
+    <div class="affiliation-container">
+      <div class="grid-item">
+        <sup>1</sup>Peking University
+      </div>
+      <div class="grid-item">
+        <sup>2</sup>UTS AAII
+      </div>
+      <div class="grid-item">
+        <sup>3</sup>UTHealth Houston
+      </div>
+      <div class="grid-item">
+        <a href="https://aigeeksgroup.github.io/" target="_blank" rel="noopener noreferrer"><sup>4</sup>AI Geeks</a>
+      </div>
+      <div class="grid-item">
+        <sup>5</sup>UCAS
+      </div>
+    </div>
+    <div class="contribution-container">
+      <div class="grid-item">
+        <sup>*</sup>Equal contribution.
+      </div>
+      <div class="grid-item">
+        <sup>†</sup>Project lead.
+      </div>
+      <div class="grid-item">
+        <sup>†</sup>Corresponding author.
+      </div>
+    </div>
+    <!-- <h2 style="margin-top: -0.5rem; margin-bottom: 1.5rem">Conference 2025</h2> -->
+  </div>
+  <div class="buttons">
+    <div class="button-container">
+      <a href="" class="button-light" rel="noopener noreferrer" target="_blank">Paper</a>
+    </div>
+    <div class="button-container">
+      <a href="https://github.com/AIGeeksGroup/DramaAgent" class="button-light" target="_blank" rel="noopener noreferrer">Code</a>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Video Modal for fullscreen playback on video click -->
+<div id="videoModal">
+<div class="modal-content">
+  <button class="close-button">×</button>
+  <!-- Modal Video -->
+  <video class="modal-video" controls=""></video>
+  <!-- Tabbed prompt container -->
+  <div class="prompt-container">
+    <div class="tab-bar">
+      <div class="tab active" data-tab-target="#textPromptTab">Story Summary</div>
+      <div class="tab" data-tab-target="#fullStoryboardTab">Full Prompt</div>
+    </div>
+    <div class="tab-content">
+      <div class="tab-pane active" id="textPromptTab">
+        <div id="modalPrompt" class="format1-prompt"></div>
+      </div>
+      <div class="tab-pane" id="fullStoryboardTab">
+        <div id="modalPrompt2" class="format2-prompt"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  // Main video transformation logic
+  const mainVideoContainer = document.getElementById('mainVideoContainer');
+  const overlayText = document.getElementById('overlayText');
+  const centerSlot = document.getElementById('centerSlot');
+  const scrollIndicator = document.querySelector('.scroll-indicator');
+  const gridContainer = document.querySelector('.grid-container');
+  const firstVideoSlot = gridContainer.querySelector('.video-slot:first-child');
+
+  // Detect if mobile
+  const isMobile = window.innerWidth <= 768;
+
+  // Set target slot based on device
+  let targetSlot = isMobile ? firstVideoSlot : centerSlot;
+
+  // Handle video swap for mobile
+  function handleVideoSwap() {
+    const newIsMobile = window.innerWidth <= 768;
+    const firstVideo = firstVideoSlot.querySelector('video');
+
+    if (newIsMobile) {
+      // On mobile: Move first video to center slot and hide original first video
+      if (!firstVideoSlot._swapped) {
+        if (firstVideo) {
+          // Store original HTML
+          firstVideoSlot._originalHTML = firstVideoSlot.innerHTML;
+          centerSlot._originalHTML = centerSlot.innerHTML;
+
+          // Clone the video to the center slot
+          const videoClone = firstVideo.cloneNode(true);
+          centerSlot.innerHTML = ''; // Clear center slot
+          centerSlot.appendChild(videoClone);
+
+          // Hide the content of the first slot (without removing it)
+          // We'll use opacity to hide it while maintaining the element structure
+          const firstSlotVideo = firstVideoSlot.querySelector('video');
+          if (firstSlotVideo) {
+            firstSlotVideo.style.opacity = '0';
+          }
+
+          firstVideoSlot._swapped = true;
+        }
+      }
+    } else if (!newIsMobile && firstVideoSlot._swapped) {
+      // Restore original content when returning to desktop
+      if (firstVideoSlot._originalHTML) {
+        firstVideoSlot.innerHTML = firstVideoSlot._originalHTML;
+      }
+      if (centerSlot._originalHTML) {
+        centerSlot.innerHTML = centerSlot._originalHTML;
+      }
+      firstVideoSlot._swapped = false;
+    }
+
+    // Update target slot after potential swap
+    targetSlot = newIsMobile ? firstVideoSlot : centerSlot;
+  }
+
+  // Function to calculate the dynamic total scroll distance
+  function updateScrollDistance() {
+    const targetRect = targetSlot.getBoundingClientRect();
+    const targetCenterY = targetRect.top + targetRect.height / 2 + window.scrollY;
+    const initialCenterY = window.innerHeight / 2;
+    return targetCenterY - initialCenterY;
+  }
+
+  // Total scroll distance over which the transformation occurs
+  let totalScrollDistance = updateScrollDistance();
+
+  // Initial fullscreen geometry
+  let initialWidth = window.innerWidth;
+  let initialHeight = window.innerHeight;
+  let initialCenter = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+
+  // Flag to indicate if the video is locked into the grid
+  let isLocked = false;
+
+  function updateVideoGeometry() {
+    const scrollY = window.scrollY;
+    let progress = Math.min(scrollY / totalScrollDistance, 1);
+
+    // Hide scroll indicator when user starts scrolling
+    scrollIndicator.style.opacity = scrollY > 0 ? '0' : '1';
+
+    if (progress < 1) {
+      // Allow pointer events before locking
+      mainVideoContainer.classList.remove('locked');
+      mainVideoContainer.querySelector('.overlay').style.pointerEvents = 'auto';
+      overlayText.style.pointerEvents = 'auto';
+
+      if (isLocked) {
+        mainVideoContainer.style.position = 'fixed';
+        isLocked = false;
+      }
+      // Calculate target grid cell geometry (relative to the viewport)
+      const targetRect = targetSlot.getBoundingClientRect();
+
+      // Interpolate width and height
+      const currentWidth = initialWidth + progress * (targetRect.width - initialWidth);
+      const currentHeight = initialHeight + progress * (targetRect.height - initialHeight);
+
+      // Calculate position to keep video centered
+      const currentLeft = (window.innerWidth - currentWidth) / 2;
+      const currentTop = (window.innerHeight - currentHeight) / 2;
+
+      mainVideoContainer.style.width = currentWidth + 'px';
+      mainVideoContainer.style.height = currentHeight + 'px';
+      mainVideoContainer.style.left = currentLeft + 'px';
+      mainVideoContainer.style.top = currentTop + 'px';
+
+      // Fade overlay text and black filter out during transformation
+      const fadeProgress = Math.pow(progress, 0.1);
+      overlayText.style.opacity = 1 - fadeProgress;
+      mainVideoContainer.querySelector('.overlay').style.opacity = 1 - progress;
+
+      // Fade in the demo videos heading only after ~40% scroll
+      const heading = document.querySelector('.demo-videos-heading');
+      const headingProgress = Math.max(0, (progress - 0.4) / 0.6);
+      heading.style.opacity = headingProgress;
+    } else {
+      // Lock the video in the grid cell when transformation is complete
+      if (!isLocked) {
+        const targetRect = targetSlot.getBoundingClientRect();
+        const lockedLeft = targetRect.left + window.scrollX;
+        const lockedTop = targetRect.top + window.scrollY;
+        const lockedWidth = targetRect.width;
+        const lockedHeight = targetRect.height;
+
+        mainVideoContainer.style.position = 'absolute';
+        mainVideoContainer.style.width = lockedWidth + 'px';
+        mainVideoContainer.style.height = lockedHeight + 'px';
+        mainVideoContainer.style.left = lockedLeft + 'px';
+        mainVideoContainer.style.top = lockedTop + 'px';
+        overlayText.style.opacity = 0;
+        mainVideoContainer.querySelector('.overlay').style.opacity = 0;
+
+        // Disable pointer events when locked
+        mainVideoContainer.querySelector('.overlay').style.pointerEvents = 'none';
+        overlayText.style.pointerEvents = 'none';
+        mainVideoContainer.classList.add('locked');
+
+        isLocked = true;
+      }
+    }
+  }
+
+  // Update the target slot and scroll distance on window resize
+  window.addEventListener('resize', () => {
+    handleVideoSwap();
+
+    initialWidth = window.innerWidth;
+    initialHeight = window.innerHeight;
+    initialCenter = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+
+    // Recalculate totalScrollDistance since element positions might have changed
+    totalScrollDistance = updateScrollDistance();
+
+    // If already locked, we need to reposition based on the new target slot
+    if (isLocked) {
+      const targetRect = targetSlot.getBoundingClientRect();
+      const lockedLeft = targetRect.left + window.scrollX;
+      const lockedTop = targetRect.top + window.scrollY;
+      const lockedWidth = targetRect.width;
+      const lockedHeight = targetRect.height;
+
+      mainVideoContainer.style.width = lockedWidth + 'px';
+      mainVideoContainer.style.height = lockedHeight + 'px';
+      mainVideoContainer.style.left = lockedLeft + 'px';
+      mainVideoContainer.style.top = lockedTop + 'px';
+    } else {
+      updateVideoGeometry();
+    }
+  });
+
+  window.addEventListener('scroll', updateVideoGeometry);
+
+  // Initialize video swap
+  handleVideoSwap();
+
+  // Initial setup
+  updateVideoGeometry();
+
+  // Modal functionality
+  const videoModal = document.getElementById('videoModal');
+  const modalVideo = videoModal.querySelector('.modal-video');
+  const modalClose = videoModal.querySelector('.close-button');
+
+  // Tab elements
+  const tabs = document.querySelectorAll('.tab');
+  const tabPanes = document.querySelectorAll('.tab-pane');
+
+  // Function to switch tabs
+  function switchTab(e) {
+    const targetSelector = e.currentTarget.getAttribute('data-tab-target');
+
+    // Remove 'active' class from all tabs and panes
+    tabs.forEach(tab => tab.classList.remove('active'));
+    tabPanes.forEach(pane => pane.classList.remove('active'));
+
+    // Activate the clicked tab and its corresponding pane
+    e.currentTarget.classList.add('active');
+    const targetPane = document.querySelector(targetSelector);
+    if (targetPane) targetPane.classList.add('active');
+  }
+
+  // Attach event listeners to each tab
+  tabs.forEach(tab => {
+    tab.addEventListener('click', switchTab);
+  });
+
+  // Video click handler to open modal
+  document.addEventListener('click', function (e) {
+    // Try to get a video element from the click target
+    let video = e.target.closest('video');
+    // If no video is directly clicked, check if the click was on a video-slot
+    if (!video) {
+      const slot = e.target.closest('.video-slot');
+      if (slot) {
+        video = slot.querySelector('video');
+      }
+    }
+    // If a video is found and it is not the modal video, open the modal
+    if (video && !video.classList.contains('modal-video')) {
+      e.preventDefault();
+      videoModal.style.display = 'flex';
+      modalVideo.src = video.src;
+      modalVideo.play();
+
+      // Fill in the text prompts
+      const promptText = video.getAttribute('data-prompt') || "";
+      const promptSummary = video.getAttribute('data-prompt-summary') || promptText;
+      document.getElementById('modalPrompt').textContent = promptSummary;
+      document.getElementById('modalPrompt2').textContent = promptText;
+
+      // Reset to the first tab ("Text Prompt")
+      tabs.forEach(tab => tab.classList.remove('active'));
+      tabPanes.forEach(pane => pane.classList.remove('active'));
+      tabs[0].classList.add('active');
+      tabPanes[0].classList.add('active');
+    }
+  });
+
+
+  // Close modal
+  modalClose.addEventListener('click', function (e) {
+    e.stopPropagation();
+    videoModal.style.display = 'none';
+    modalVideo.pause();
+  });
+
+  // Close modal when clicking outside content
+  videoModal.addEventListener('click', function (e) {
+    if (e.target === videoModal) {
+      videoModal.style.display = 'none';
+      modalVideo.pause();
+    }
+  });
+});
+</script>
+
+
+<body>
+  <!-- Scroll space -->
+  <div class="hero"></div>
+
+  <!-- Scroll indicator -->
+  <div class="scroll-indicator" style="opacity: 1;">&gt;</div>
+
+  <div class="section">
+  </div>
+
+  <!-- Demo Videos heading -->
+  <div class="demo-videos-heading" style="opacity: 0;">
+    <h1>Demo Drama Videos</h1>
+    <p>Click any video to see the text prompt used to generate it.</p>
+  </div>
+
+  <!-- 3×2 Grid of video slots (target slot is the middle cell of the first row) -->
+  <div class="grid-container">
+    <div class="video-slot">
+      <video src="Drama_video/DespicableMe4/final_video.mp4" autoplay="" muted="" loop="" playsinline="" webkit-playsinline="" 
+      data-prompt-summary="video 1" 
+      data-prompt="long">
+      </video>
+    </div>
+    <div class="video-slot" id="centerSlot">
+      <!-- This slot intentionally left empty for the transformation effect -->
+    </div>
+    <div class="video-slot">
+      <video src="Drama_video/FastX/final_video.mp4" autoplay="" muted="" loop="" playsinline="" webkit-playsinline=""
+      data-prompt-summary="video 3" 
+      data-prompt="long">
+      </video>
+    </div>
+  </div>
+<div class="grid-container">
+    <div class="video-slot">
+      <video src="Drama_video/Harry_Potter_and_the_prisoner_of_azkaban/final_video.mp4" autoplay="" muted="" loop="" playsinline="" webkit-playsinline=""
+      data-prompt-summary="video 4" 
+      data-prompt="long">
+      </video>
+    </div>
+    <div class="video-slot">
+      <video src="Drama_video/NeZha2/final_video.mp4" autoplay="" muted="" loop="" playsinline="" webkit-playsinline=""
+      data-prompt-summary="video 5" 
+      data-prompt="long">
+      </video>
+    </div>
+    <div class="video-slot">
+      <video src="Drama_video/NovelStory_2/final_video.mp4" autoplay="" muted="" loop="" playsinline="" webkit-playsinline=""
+      data-prompt-summary="video 6" 
+      data-prompt="long">
+      </video>
+    </div>
+		</div>
+
+    <div class="section">
+      <!-- Fullscreen video with overlay text -->
+      <div id="mainVideoContainer" class="" style="width: 1850px; height: 932px; left: 0px; top: 0px; position: fixed;">
+        <div class="overlay" style="pointer-events: auto; opacity: 1;"></div>
+        <video src="Drama_video/FrozenII/final_video.mp4" autoplay="" muted="" loop="" playsinline="" webkit-playsinline=""
+        data-prompt-summary="video 2" 
+        data-prompt="long">
+        </video>
+      </div>
+  </div>
+
+  <div class="content">
+    <div class="section">
+      <div class="text-only-section">
+        <h1>Abstract</h1>
+        <p style="text-align: justify;">
+          Text-to-video generation has progressed rapidly with diffusion and autoregressive models, yet creating coherent long-form audiovisual content remains challenging. Existing approaches often fail to preserve narrative consistency, character identity, and sound synchronization across extended sequences. We introduce DramaAgent, an end-to-end multimodal framework for text-to-video-and-audio generation. Unlike conventional diffusion-based systems, DramaAgent employs a hierarchical agentic architecture that decomposes narratives into keyframes, segments, and synchronized audio tracks. It integrates planning, generation, and self-evolving refinement within a unified pipeline for adaptive quality improvement. Experiments show that DramaAgent achieves superior temporal coherence, motion smoothness, and audiovisual consistency, generating coherent videos up to 300 seconds long. DramaAgent provides a scalable foundation for future research in coherent and perceptually aligned audiovisual generation.
+        </p>
+        <!-- <div class="buttons">
+          <div class="button-container">
+            <a href="https://arxiv.org/abs/2504.05298" class="button-light" style="background: rgba(0, 0, 0, 0.04)" rel="noopener noreferrer" target="_blank">Paper</a>
+          </div>
+          <div class="button-container">
+            <a href="https://github.com/test-time-training/ttt-video-dit" class="button-light" style="background: rgba(0, 0, 0, 0.04)" target="_blank" rel="noopener noreferrer">Code</a>
+          </div>
+        </div> -->
+      </div>
+    </div>
+
+	    <div class="section">
+	      <div class="text-only-section">
+	        <h1>Method</h1>
+	        <p style="text-align: justify;">
+	          Overview of the story creation workflow. The user provides a short narrative prompt describing the desired tone and theme. An LLM generates the main storyline and performs <b>Story Analysis and Plot Breakdown</b>, dividing the narrative into sequential scenes with thematic coherence. Image Generation modules create <b>Character Stills</b>, while Video and Audio Generation modules render visual and sound outputs respectively. The final system integrates these components to produce a cohesive animated short film.
+	        </p>
+	        <img src="show11-1.png" alt="Method overview" style="width: 100%; max-width: 900px; display: block; margin: 16px auto 0;" />
+	      </div>
+	</div>
+
+    <!-- Scene Consistency Section -->
+    <!-- <div class="section scene-consistency">
+      <div class="text-only-section">
+        <h1>Adding TTT Layers to a Pre-Trained Transformer</h1>
+        <p>Adding TTT layers into a pre-trained Transformer enables it to generate one-minute videos with strong
+          temporal consistency and motion smoothness.</p>
+      </div>
+
+      <div class="scene-consistency-container">
+        <div class="scene-column">
+          <div class="video-wrapper">
+            <span class="video-label">Local Attention</span>
+            <video src="veo.mp4" autoplay="" muted="" loop="" playsinline="" webkit-playsinline=""
+        data-prompt-summary="video 2" 
+        data-prompt="long">
+        </video>
+          </div>
+          <p class="video-description">
+            Local Attention struggles with consistency in Tom's color, Jerry's mousehole, and distorts Tom's body.
+          </p>
+        </div>
+        <div class="scene-column">
+          <div class="video-wrapper">
+            <span class="video-label">TTT-MLP</span>
+            <video src="veo.mp4" autoplay="" muted="" loop="" playsinline="" webkit-playsinline=""
+        data-prompt-summary="video 2" 
+        data-prompt="long">
+        </video>
+          </div>
+          <p class="video-description">
+            TTT-MLP demonstrates strong character and temporal consistency across the entire duration of the video.
+          </p>
+        </div>
+      </div>
+    </div> -->
+
+    <!-- Baseline Comparisons Section -->
+    <div class="section scene-consistency">
+      <div class="text-only-section">
+        <h1>Foundation Model Comparison</h1>
+        <p>
+          Comparison of video generation quality across four commercial APIs: Hailuo,  Keling, Jimeng, and SeedDance.
+        </p>
+      </div>
+
+
+      <div class="scene-consistency-container">
+        
+        <!-- Wan -->
+        <div class="scene-column">
+
+          <div class="video-wrapper">
+            <span class="video-label">Wan 2.2 I2V Flash</span>
+            <video src="foundation_1/wan.mp4" autoplay="" muted="" loop="" playsinline="" webkit-playsinline=""
+        data-prompt-summary="Shot 1: In a wide view of Arendelle’s courtyard, Anna and Elsa stand at the center as the town bustles with preparations and supplies are packed for the journey." 
+        data-prompt="longx">
+        </video>
+            <!-- <p class="video-description">
+              TTT-MLP preserves temporal consistency over scene changes and across angles.
+            </p> -->
+          </div>
+
+          <div class="video-wrapper">
+            <span class="video-label">Wan 2.2 I2V Flash</span>
+            <video src="foundation_2/wan.mp4" autoplay="" muted="" loop="" playsinline="" webkit-playsinline=""
+        data-prompt-summary="Shot 2: Kristoff and Olaf load provisions onto the horses—Kristoff double-checks the maps while Olaf hums—framed as a focused medium shot against the ongoing bustle." 
+        data-prompt="longx">
+        </video>
+            <!-- <p class="video-description">
+              TTT-MLP preserves temporal consistency over scene changes and across angles.
+            </p> -->
+          </div>
+
+          <div class="video-wrapper">
+            <span class="video-label">Wan 2.2 I2V Flash</span>
+            <video src="foundation_3/wan.mp4" autoplay="" muted="" loop="" playsinline="" webkit-playsinline=""
+        data-prompt-summary="Shot 3: Amid the activity, Mattias hands Anna a map and they exchange determined words about the route, underscoring the seriousness of the mission." 
+        data-prompt="longx">
+        </video>
+            <!-- <p class="video-description">
+              TTT-MLP preserves temporal consistency over scene changes and across angles.
+            </p> -->
+          </div>
+
+        </div>
+
+
+
+        <!-- Kling -->
+        <div class="scene-column">
+
+          <div class="video-wrapper">
+            <span class="video-label">Kling 1.0</span>
+            <video src="foundation_1/kling.mp4" autoplay="" muted="" loop="" playsinline="" webkit-playsinline=""
+        data-prompt-summary="Shot 1: In a wide view of Arendelle’s courtyard, Anna and Elsa stand at the center as the town bustles with preparations and supplies are packed for the journey." 
+        data-prompt="longx">
+        </video>
+            <!-- <p class="video-description">
+              TTT-MLP preserves temporal consistency over scene changes and across angles.
+            </p> -->
+          </div>
+
+          <div class="video-wrapper">
+            <span class="video-label">Kling 1.0</span>
+            <video src="foundation_2/kling.mp4" autoplay="" muted="" loop="" playsinline="" webkit-playsinline=""
+        data-prompt-summary="Shot 2: Kristoff and Olaf load provisions onto the horses—Kristoff double-checks the maps while Olaf hums—framed as a focused medium shot against the ongoing bustle." 
+        data-prompt="longx">
+        </video>
+            <!-- <p class="video-description">
+              TTT-MLP preserves temporal consistency over scene changes and across angles.
+            </p> -->
+          </div>
+
+          <div class="video-wrapper">
+            <span class="video-label">Kling 1.0</span>
+            <video src="foundation_3/kling.mp4" autoplay="" muted="" loop="" playsinline="" webkit-playsinline=""
+        data-prompt-summary="Shot 3: Amid the activity, Mattias hands Anna a map and they exchange determined words about the route, underscoring the seriousness of the mission." 
+        data-prompt="longx">
+        </video>
+            <!-- <p class="video-description">
+              TTT-MLP preserves temporal consistency over scene changes and across angles.
+            </p> -->
+          </div>
+
+        </div>
+
+
+
+
+        <!-- Hailuo -->
+        <div class="scene-column">
+
+          <div class="video-wrapper">
+            <span class="video-label">Hailuo 02</span>
+            <video src="foundation_1/hailuo.mp4" autoplay="" muted="" loop="" playsinline="" webkit-playsinline=""
+        data-prompt-summary="Shot 1: In a wide view of Arendelle’s courtyard, Anna and Elsa stand at the center as the town bustles with preparations and supplies are packed for the journey." 
+        data-prompt="longx">
+        </video>
+            <!-- <p class="video-description">
+              TTT-MLP preserves temporal consistency over scene changes and across angles.
+            </p> -->
+          </div>
+
+          <div class="video-wrapper">
+            <span class="video-label">Hailuo 02</span>
+            <video src="foundation_2/hailuo.mp4" autoplay="" muted="" loop="" playsinline="" webkit-playsinline=""
+        data-prompt-summary="Shot 2: Kristoff and Olaf load provisions onto the horses—Kristoff double-checks the maps while Olaf hums—framed as a focused medium shot against the ongoing bustle." 
+        data-prompt="longx">
+        </video>
+            <!-- <p class="video-description">
+              TTT-MLP preserves temporal consistency over scene changes and across angles.
+            </p> -->
+          </div>
+
+          <div class="video-wrapper">
+            <span class="video-label">Hailuo 02</span>
+            <video src="foundation_3/hailuo.mp4" autoplay="" muted="" loop="" playsinline="" webkit-playsinline=""
+        data-prompt-summary="Shot 3: Amid the activity, Mattias hands Anna a map and they exchange determined words about the route, underscoring the seriousness of the mission." 
+        data-prompt="longx">
+        </video>
+            <!-- <p class="video-description">
+              TTT-MLP preserves temporal consistency over scene changes and across angles.
+            </p> -->
+          </div>
+
+
+        </div>
+
+
+
+
+
+        <!-- Seedance -->
+        <div class="scene-column">
+
+          <div class="video-wrapper">
+            <span class="video-label">Seedance 1.0 Pro</span>
+            <video src="foundation_1/seedance.mp4" autoplay="" muted="" loop="" playsinline="" webkit-playsinline=""
+        data-prompt-summary="Shot 1: In a wide view of Arendelle’s courtyard, Anna and Elsa stand at the center as the town bustles with preparations and supplies are packed for the journey." 
+        data-prompt="longx">
+        </video>
+            <!-- <p class="video-description">
+              TTT-MLP preserves temporal consistency over scene changes and across angles.
+            </p> -->
+          </div>
+
+          <div class="video-wrapper">
+            <span class="video-label">Seedance 1.0 Pro</span>
+            <video src="foundation_2/seedance.mp4" autoplay="" muted="" loop="" playsinline="" webkit-playsinline=""
+        data-prompt-summary="Shot 2: Kristoff and Olaf load provisions onto the horses—Kristoff double-checks the maps while Olaf hums—framed as a focused medium shot against the ongoing bustle." 
+        data-prompt="longx">
+        </video>
+            <!-- <p class="video-description">
+              TTT-MLP preserves temporal consistency over scene changes and across angles.
+            </p> -->
+          </div>
+
+          <div class="video-wrapper">
+            <span class="video-label">Seedance 1.0 Pro</span>
+            <video src="foundation_3/seedance.mp4" autoplay="" muted="" loop="" playsinline="" webkit-playsinline=""
+        data-prompt-summary="Shot 3: Amid the activity, Mattias hands Anna a map and they exchange determined words about the route, underscoring the seriousness of the mission." 
+        data-prompt="longx">
+        </video>
+            <!-- <p class="video-description">
+              TTT-MLP preserves temporal consistency over scene changes and across angles.
+            </p> -->
+          </div>
+
+        </div>
+
+
+
+
+
+        <!-- Jimeng -->
+        <div class="scene-column">
+
+          <div class="video-wrapper">
+            <span class="video-label">Jimeng 3.0 Pro</span>
+            <video src="foundation_1/jimeng.mp4" autoplay="" muted="" loop="" playsinline="" webkit-playsinline=""
+        data-prompt-summary="Shot 1: In a wide view of Arendelle’s courtyard, Anna and Elsa stand at the center as the town bustles with preparations and supplies are packed for the journey." 
+        data-prompt="longx">
+        </video>
+            <!-- <p class="video-description">
+              TTT-MLP preserves temporal consistency over scene changes and across angles.
+            </p> -->
+          </div>
+
+          <div class="video-wrapper">
+            <span class="video-label">Jimeng 3.0 Pro</span>
+            <video src="foundation_2/jimeng.mp4" autoplay="" muted="" loop="" playsinline="" webkit-playsinline=""
+        data-prompt-summary="Shot 2: Kristoff and Olaf load provisions onto the horses—Kristoff double-checks the maps while Olaf hums—framed as a focused medium shot against the ongoing bustle." 
+        data-prompt="longx">
+        </video>
+            <!-- <p class="video-description">
+              TTT-MLP preserves temporal consistency over scene changes and across angles.
+            </p> -->
+          </div>
+
+          <div class="video-wrapper">
+            <span class="video-label">Jimeng 3.0 Pro</span>
+            <video src="foundation_3/jimeng.mp4" autoplay="" muted="" loop="" playsinline="" webkit-playsinline=""
+        data-prompt-summary="Shot 3: Amid the activity, Mattias hands Anna a map and they exchange determined words about the route, underscoring the seriousness of the mission." 
+        data-prompt="longx">
+        </video>
+            <!-- <p class="video-description">
+              TTT-MLP preserves temporal consistency over scene changes and across angles.
+            </p> -->
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Limitations Section -->
+    <!-- <div class="section scene-consistency">
+      <div class="text-only-section">
+        <h1>Limitations</h1>
+        <p>The generated one-minute videos demonstrate clear potential as a proof of concept, but still contain notable
+          artifacts.
+        </p>
+      </div>
+
+      <div class="scene-consistency-container">
+        <div class="scene-column">
+          <div class="video-wrapper">
+            <video src="veo.mp4" autoplay="" muted="" loop="" playsinline="" webkit-playsinline=""
+        data-prompt-summary="video 2" 
+        data-prompt="long">
+        </video>
+          </div>
+          <p class="video-description">
+            Temporal consistency: The boxes morph between 3-second segments of the same scene.
+          </p>
+        </div>
+        <div class="scene-column">
+          <div class="video-wrapper">
+            <video src="veo.mp4" autoplay="" muted="" loop="" playsinline="" webkit-playsinline=""
+        data-prompt-summary="video 2" 
+        data-prompt="long">
+        </video>
+          </div>
+          <p class="video-description">
+            Motion naturalness: The cheese hovers in mid-air rather than falling naturally to the ground.
+          </p>
+        </div>
+        <div class="scene-column">
+          <div class="video-wrapper">
+            <video src="veo.mp4" autoplay="" muted="" loop="" playsinline="" webkit-playsinline=""
+        data-prompt-summary="video 2" 
+        data-prompt="long">
+        </video>
+          </div>
+          <p class="video-description">
+            Aesthetics: The lighting in the kitchen becomes dramatically brighter as Tom turns around.
+          </p>
+        </div>
+      </div>
+    </div> -->
+
+
+</body></html>
