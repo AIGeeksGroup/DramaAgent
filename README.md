@@ -4,7 +4,7 @@ This repository contains the implementation of the paper:
 
 > **DramaAgent: Agentic Storytelling Video Generation**
 >
-> [Ting Huang](https://github.com/Believeht029)\*, Biao Wu\*, Ronghao Chen\*, [Zeyu Zhang](https://steve-zeyu-zhang.github.io/)<sup>†</sup>, Tengfei Cheng, Qizhen Lan, Huacan Wang, and [Hao Tang](https://ha0tang.github.io/)<sup>‡</sup>
+> [Ting Huang](https://github.com/Believeht029)\*, [Biao Wu](https://scholar.google.com/citations?user=Y3SBBWMAAAAJ&hl=en)\*, Ronghao Chen\*, [Zeyu Zhang](https://steve-zeyu-zhang.github.io/)<sup>†</sup>, Tengfei Cheng, Qizhen Lan, Huacan Wang, and [Hao Tang](https://ha0tang.github.io/)<sup>‡</sup>
 >
 > Peking University · UTS AAII · UOL · UTHealth Houston · UCAS
 >
@@ -12,7 +12,7 @@ This repository contains the implementation of the paper:
 >
 > ***AACL-IJCNLP 2026***
 >
-> ### [Website](https://aigeeksgroup.github.io/DramaAgent/) | [Code](https://github.com/AIGeeksGroup/DramaAgent)
+> ### [Paper]() | [Website](https://aigeeksgroup.github.io/DramaAgent/)
 
 ## ✏️ Citation
 
