@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "drama-agent"
+version = "0.1.0"
+description = "Hierarchical story video generation with persistent characters and targeted repair"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+drama-agent = "drama_agent.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["drama_agent*"]

@@ -1,0 +1,24 @@
+{
+  "backend": "dashscope",
+  "candidates": 3,
+  "repair_rounds": 2,
+  "threshold": 0.8,
+  "min_improvement": 0.02,
+  "width": 1280,
+  "height": 720,
+  "options": {
+    "api_base": "https://YOUR_WORKSPACE_ID.cn-beijing.maas.aliyuncs.com/api/v1",
+    "api_key_env": "DASHSCOPE_API_KEY",
+    "llm_base": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+    "llm_key_env": "DASHSCOPE_API_KEY",
+    "llm_model": "qwen-plus",
+    "judge_model": "qwen-vl-max",
+    "image_model": "qwen-image",
+    "video_model": "wan2.2-t2v-plus",
+    "poll_interval": 15,
+    "task_timeout": 1800,
+    "voices": {"c1": "Tingting", "c2": "Meijia"},
+    "ambience_assets": {},
+    "music_assets": {}
+  }
+}

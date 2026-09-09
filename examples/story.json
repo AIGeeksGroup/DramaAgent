@@ -1,0 +1,14 @@
+{
+  "title": "回家的灯",
+  "narrative": "小岚找到一盏灯，和阿木穿过森林，最终找到回家的路。",
+  "characters": [
+    {"id": "c1", "name": "小岚", "appearance": "黑色齐耳短发，圆脸，蓝色连帽外套，白色围巾，棕色短靴；温暖的三维动画风格", "voice": "Tingting"},
+    {"id": "c2", "name": "阿木", "appearance": "棕色卷发，方框眼镜，绿色棉外套，黄色背包；温暖的三维动画风格", "voice": "Meijia"}
+  ],
+  "scenes": [
+    {"id": "s001", "description": "小岚从雪地中捡起一盏发着暖光的灯。", "characters": ["c1"], "environment": "黄昏的雪山脚下", "emotion": "惊喜", "duration": 5,
+      "dialogue": [{"speaker": "c1", "text": "这里有盏灯。", "start": 1, "end": 4, "emotion": "惊喜", "delivery": "轻声"}]},
+    {"id": "s002", "description": "小岚右手提着同一盏灯，在林中找到阿木，两人一起朝远处的村庄走去。", "characters": ["c1", "c2"], "environment": "雪山脚下通往村庄的森林边缘", "emotion": "安心", "transition": "保持小岚的服装和右手提灯的位置，从雪地切到森林入口。", "duration": 5,
+      "dialogue": [{"speaker": "c2", "text": "我们回家吧。", "start": 1, "end": 4, "emotion": "安心", "delivery": "温柔"}]}
+  ]
+}

@@ -1,0 +1,8 @@
+# Optional CUDA worker environment only. Install the appropriate CUDA build of torch first.
+torch>=2.4
+diffusers>=0.31,<0.38
+transformers>=4.44,<5
+accelerate>=0.34
+sentencepiece
+pillow
+imageio[ffmpeg]
