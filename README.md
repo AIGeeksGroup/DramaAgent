@@ -12,7 +12,7 @@ This repository contains the implementation of the paper:
 >
 > ***AACL-IJCNLP 2026***
 >
-> ### [Paper]() | [Website](https://aigeeksgroup.github.io/DramaAgent/)
+> ### [Paper](https://arxiv.org/abs/2610.00097) | [Website](https://aigeeksgroup.github.io/DramaAgent/)
 
 ## ✏️ Citation
 
